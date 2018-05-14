@@ -35,4 +35,8 @@ app.get('/api/json', (req, res) => {
   })
 })
 
+app.post('/api/createUser', (req, res) => {
+  res.send({ message: "We received your post" }); 
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));

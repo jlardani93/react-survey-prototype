@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import logo from './logo.svg';
 import './App.css';
 import APITest from './APITest'
+import Admin from './Admin'
+import Teacher from './Teacher'
+import Student from './Student'
+import Home from './Home'
 
 class App extends Component {
   state = {
@@ -36,7 +40,11 @@ class App extends Component {
           {this.state.response} | Hello from React
         </p>
         <Switch>
-          <Route exact path='/' component={APITest} />
+          <Route exact path='/' component={Home} />
+          <Route path='/ApiTest' component={APITest} />
+          <Route path='/Admin' component={Admin}/>
+          <Route path='/Teacher' component={Teacher} />
+          <Route path='/Student' component={Student} />
         </Switch>
       </div>
     );
