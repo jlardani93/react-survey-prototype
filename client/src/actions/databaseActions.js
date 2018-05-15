@@ -27,7 +27,7 @@ export function login(_username, _password){
 
     req.onreadystatechange = () => {
       if (req.readyState === 4 && req.status === 200) {
-        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
       }
     }
     req.send(params);

@@ -13,9 +13,17 @@ class Home extends React.Component {
   _password
 
   handleLogin(event){
+    const { dispatch } = this.props;
     event.preventDefault();
-    actions.login(this._userName.value, this._password.value)
-    .then(response => console.log(response));
+    const loginCallback = (function(userObject){
+      if (userObject[0]) {
+        dispatch(actions.setUser(userObject[0]));
+        console.log("just set user");
+      } else {
+        alert('false');
+      }
+    }).bind(this)
+    dispatch(actions.login(this._userName.value, this._password.value, loginCallback)) //pass callback to handle ui functionality with returns
   }
 
   render(){
