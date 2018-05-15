@@ -6,7 +6,7 @@ class Home extends React.Component {
 
   constructor(props){
     super(props);
-    this.handleLogin = this.handleLogin.bind(this); 
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   _userName
@@ -14,8 +14,8 @@ class Home extends React.Component {
 
   handleLogin(event){
     event.preventDefault();
-    actions.addUser(this._userName.value, this._password.value, 'teacher');
-    console.log("Trying to login");
+    actions.login(this._userName.value, this._password.value)
+    .then(response => console.log(response));
   }
 
   render(){
