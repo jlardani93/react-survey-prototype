@@ -35,7 +35,12 @@ class TeachersPanel extends React.Component {
   }
 
   handleSuccessfulTeacherCreation(){
+    const { dispatch } = this.props;
+    const getSchoolsCallback = (function(response){
+      this.setState({schools: response})
+    }).bind(this);
     this.setState({showTeacherCreate: false});
+    dispatch(actions.getSchools(getSchoolsCallback));
   }
 
   componentDidMount(){

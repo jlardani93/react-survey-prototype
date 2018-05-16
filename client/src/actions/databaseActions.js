@@ -112,3 +112,16 @@ export function onQueryResponse(_table, _column, _value){
     req.send(params);
   })
 }
+
+export function sendEmail(){
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', '/api/sendEmail', true);
+    req.onreadystatechange = () => {
+      if (req. readyState === 4&& req.status === 200) {
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(); 
+  })
+}

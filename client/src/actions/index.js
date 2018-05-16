@@ -41,6 +41,13 @@ export function getSchools(getSchoolsCallback) {
   return (dispatch) => databaseActions.getSchools()
   .then(response => {
     console.log("getSchools response: ", response);
-    getSchoolsCallback(response); 
+    getSchoolsCallback(response);
+  })
+}
+
+export function sendEmail() {
+  return (dispatch) => databaseActions.sendEmail()
+  .then(response => {
+    console.log(response); 
   })
 }

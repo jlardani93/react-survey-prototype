@@ -3,6 +3,9 @@ const mysql = require('mysql');
 const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 5000;
+const nodemailer = require('nodemailer');
+const CREDENTIALS = require('./__EMAIL__.js')
+const { user, pass } = CREDENTIALS.CREDENTIALS;
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -13,6 +16,34 @@ const connection = mysql.createConnection({
   user: "root",
   password: "root",
   database: "justin"
+})
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: user,
+    pass: pass
+  }
+})
+
+app.get('/api/sendEmail', (req, res) => {
+  const mailOptions = {
+    from: user,
+    to: 'jlardani93@gmail.com',
+    subject: 'test email',
+    html: '<p>Hey baby :P :P :P Eggplant </p>'
+  }
+  console.log("sending email");
+  console.log(CREDENTIALS);
+  console.log(user, pass);
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  })
 })
 
 
