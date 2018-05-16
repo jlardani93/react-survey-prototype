@@ -55,8 +55,9 @@ app.post('/api/createUser', (req, res) => {
   res.send({ message: "We received your post" });
 })
 
-app.post('/api/teacher/create'), (req, res) => {
-  console.log(req.body.name);
+app.post('/api/teacher/create', (req, res) => {
+  console.log("logging parameters");
+  console.log(req.body.name, req.body.school, req.body.email);
   const name = req.body.name;
   const school = req.body.school;
   const email = req.body.email;
@@ -65,6 +66,17 @@ app.post('/api/teacher/create'), (req, res) => {
     if (err) throw err;
     res.send(result);
   })
-}
+})
+
+app.post('/api/checkEntry', (req, res) => {
+  console.log("logging parameters");
+  console.log(req.body.table, req.body.column, req.body.value);
+  const {table, column, value} = req.body
+  const sql = `SELECT * FROM ${table} WHERE ${column} = ?`;
+  connection.query(sql, [value], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

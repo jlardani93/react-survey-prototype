@@ -22,7 +22,7 @@ class Admin extends React.Component {
     const currentPanel = (() => {
       switch(this.state.shownPanel){
         case 'teachers':
-          return <TeachersPanel/>
+          return <TeachersPanel />
         default:
           return null;
       }

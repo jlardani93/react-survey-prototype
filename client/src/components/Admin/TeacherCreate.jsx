@@ -1,12 +1,28 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import * as actions from './../../actions'
 
-export default function TeacherCreate(){
+function TeacherCreate(props){
 
   let _schoolName, _teacherName, _teacherEmail;
 
   function handleCreateTeacher(event) {
     event.preventDefault();
-    console.log(_schoolName.value, _teacherName.value, _teacherEmail.value);
+    const { dispatch } = props;
+    const createTeacherCallback = (response) => {
+      if (response){
+        alert("Teacher added successfully");
+        props.onSuccessfulTeacherCreation();
+      }
+    }
+    const onDatabaseDoesNotContainEntry = (boolean) => {
+      if (boolean === true){
+        dispatch(actions.createTeacher(_schoolName.value, _teacherName.value, _teacherEmail.value, createTeacherCallback))
+      } else {
+        alert("A teacher with that e-mail already exists in the system");
+      }
+    }
+    dispatch(actions.onQueryResponse(false, 'teachers', 'email', _teacherEmail.value, onDatabaseDoesNotContainEntry))
   }
   return(
     <div>
@@ -29,3 +45,5 @@ export default function TeacherCreate(){
     </div>
   )
 }
+
+export default connect()(TeacherCreate);
