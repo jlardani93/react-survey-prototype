@@ -55,4 +55,16 @@ app.post('/api/createUser', (req, res) => {
   res.send({ message: "We received your post" });
 })
 
+app.post('/api/teacher/create'), (req, res) => {
+  console.log(req.body.name);
+  const name = req.body.name;
+  const school = req.body.school;
+  const email = req.body.email;
+  const sql = "INSERT INTO teachers (name, school, email) VALUES ( ? , ? , ?)"
+  connection.query(sql, [name, school, email], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+}
+
 app.listen(port, () => console.log(`Listening on port ${port}`));

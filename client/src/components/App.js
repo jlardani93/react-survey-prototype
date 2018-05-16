@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import logo from './logo.svg';
 import './App.css';
 import APITest from './APITest'
-import Admin from './Admin'
-import Teacher from './Teacher'
+import Admin from './Admin/Admin'
+import Teacher from './Teacher/Teacher'
 import Student from './Student'
 import Home from './Home'
 

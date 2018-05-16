@@ -15,12 +15,25 @@ class Home extends React.Component {
   handleLogin(event){
     const { dispatch } = this.props;
     event.preventDefault();
+    //DEFINES CALLBACK FOR ACTIONS TO BE COMPLETED AFTER LOGIN ATTEMPT
     const loginCallback = (function(userObject){
       if (userObject[0]) {
         dispatch(actions.setUser(userObject[0]));
-        console.log("just set user");
+        //REROUTES USER TO APPROPRIATE PART OF SITE BASED UPON WHAT THE ROLE OF THE LOGGED-IN USER IS
+        switch (this.props.role) {
+          case 'admin':
+            this.props.history.push('/admin');
+            break;
+          case 'teacher':
+            this.props.history.push('/teacher');
+            break;
+          default:
+            console.log('received irresolvable role: ', this.props.user);
+        }
       } else {
-        alert('false');
+        alert('The username and password you entered do not match any accounts on record');
+        this._userName.value = '';
+        this._password.value = '';
       }
     }).bind(this)
     dispatch(actions.login(this._userName.value, this._password.value, loginCallback)) //pass callback to handle ui functionality with returns
@@ -34,11 +47,11 @@ class Home extends React.Component {
           <form id="loginForm" onSubmit={this.handleLogin}>
             <div>
               <label>UserName: </label>
-              <input ref={ element => this._userName = element}></input>
+              <input ref={ element => this._userName = element} required />
             </div>
             <div>
               <label>Password: </label>
-              <input type='password' ref={ element => this._password = element}></input>
+              <input type='password' ref={ element => this._password = element} required />
             </div>
             <button type="submit">Submit</button>
           </form>
@@ -51,4 +64,10 @@ class Home extends React.Component {
   }
 }
 
-export default connect()(Home)
+const mapStateToProps = state => {
+  return {
+    role: state.user.role
+  }
+}
+
+export default connect(mapStateToProps)(Home)
