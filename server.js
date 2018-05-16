@@ -49,6 +49,13 @@ app.get('/api/json', (req, res) => {
   })
 })
 
+app.get('/api/school/info', (req, res) => {
+  connection.query("SELECT DISTINCT school FROM teachers", (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
 
 app.post('/api/createUser', (req, res) => {
   console.log(req.body.username);
@@ -63,6 +70,35 @@ app.post('/api/teacher/create', (req, res) => {
   const email = req.body.email;
   const sql = "INSERT INTO teachers (name, school, email) VALUES ( ? , ? , ?)"
   connection.query(sql, [name, school, email], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
+app.post('/api/teacher/info', (req, res) => {
+  console.log("logging parameters");
+  console.log(req.body.school, req.body.name);
+  console.log(typeof(req.body.school));
+  const { school, name } = req.body;
+  let sql = 'SELECT * FROM teachers';
+  let params = [];
+
+  if (school || name) sql += ' WHERE ';
+
+  if (school && name) {
+    sql += `school = ? AND name = ?`;
+    params = [school, name];
+  } else if (school) {
+    sql += `school = ?`;
+    params = [school];
+  } else if (name) {
+    sql += `name = ?`;
+    params = [name];
+  }
+
+  console.log('params', params);
+
+  connection.query(sql, params, (err, result) => {
     if (err) throw err;
     res.send(result);
   })

@@ -53,6 +53,42 @@ export function createTeacher(_school, _name, _email){
   })
 }
 
+
+//SEARCHES FOR TEACHERS BY SCHOOL AND NAME
+export function getTeachers(_school = '', _name = ''){
+  return new Promise((resolve, reject) => {
+    console.log("logging parameters in promise");
+    console.log(_school, _name);
+    const req = new XMLHttpRequest();
+    const params = `school=${_school}&name=${_name}`;
+
+    req.open('POST', '/api/teacher/info', true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(params);
+  })
+}
+
+//GETS ALL SCHOOL NAMES FROM DATABASE
+export function getSchools(){
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', '/api/school/info', true);
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send();
+  })
+}
+
 //CHECKS IF ENTRY ALREADY EXISTS IN DATABASE
 export function onQueryResponse(_table, _column, _value){
   return new Promise((resolve, reject) => {

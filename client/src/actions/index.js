@@ -28,3 +28,19 @@ export function createTeacher(school, name, email, createTeacherCallback) {
     createTeacherCallback(response.affectedRow !== 0);
   })
 }
+
+export function getTeachers(getTeachersCallback, school = '', name = '') {
+  return (dispatch) => databaseActions.getTeachers(school, name)
+  .then(response => {
+    console.log("getTeachers response:", response);
+    getTeachersCallback(response);
+  })
+}
+
+export function getSchools(getSchoolsCallback) {
+  return (dispatch) => databaseActions.getSchools()
+  .then(response => {
+    console.log("getSchools response: ", response);
+    getSchoolsCallback(response); 
+  })
+}
