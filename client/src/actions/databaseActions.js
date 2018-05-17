@@ -16,6 +16,31 @@ export function createUser(_username, _password, _role){
   })
 }
 
+//Send e-mail on new teacher creation:
+//Can send e-mail if teacher has not been sent an e-mail that day
+//Can send e-mail if teacher requests to be sent e-mail with invitation to create account
+//Needs e-mail, URL for registration, teacher's name, and school
+
+export function sendInviteEmail(_school, _teacherName, _email) {
+  return new Promise((resolve, reject) => {
+    console.log("logging parameters in sendInviteEmail promise: ", _school, _teacherName, _email);
+    const req = new XMLHttpRequest();
+    const params = `school=${_school}&teacherName=${_teacherName}&email=${_email}`;
+    req.open('POST', '/api/teacher/invite', true);
+
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        resolve(req.responseText);
+      }
+    }
+    req.send(params);
+  })
+}
+
+
+
 //SENDS USERNAME AND PASSWORD TO DATABASE AND TRIES TO LOGIN USERNAME
 export function login(_username, _password){
   return new Promise((resolve, reject) => {
@@ -63,6 +88,26 @@ export function getTeachers(_school = '', _name = ''){
     const params = `school=${_school}&name=${_name}`;
 
     req.open('POST', '/api/teacher/info', true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(params);
+  })
+}
+
+//UPDATE TEACHER INFORMATION
+export function updateTeacher(_id, _school, _email, _name, _lastInviteEmailDate){
+  return new Promise((resolve, reject) => {
+    console.log("logging parameters in promise");
+    console.log(_school, _name);
+    const req = new XMLHttpRequest();
+    const params = `id=${_id}&school=${_school}&email=${_email}&name=${_name}&date=${_lastInviteEmailDate}`;
+
+    req.open('POST', '/api/teacher/update', true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = () => {
       if (req.readyState === 4 && req.status === 200) {
@@ -122,6 +167,6 @@ export function sendEmail(){
         resolve(JSON.parse(req.responseText));
       }
     }
-    req.send(); 
+    req.send();
   })
 }

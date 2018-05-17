@@ -31,7 +31,7 @@ app.get('/api/sendEmail', (req, res) => {
     from: user,
     to: 'jlardani93@gmail.com',
     subject: 'test email',
-    html: '<p>Hey baby :P :P :P Eggplant </p>'
+    html: 'test email'
   }
   console.log("sending email");
   console.log(CREDENTIALS);
@@ -65,6 +65,31 @@ app.post('/api/login', (req, res) => {
   connection.query(sql, [username, password], (err, result) => {
     if (err) throw err;
     res.send(result);
+  })
+})
+
+//SEND ACCOUNT INVITATION EMAIL TO TEACHER
+app.post('/api/teacher/invite', (req, res) => {
+  const { school, teacherName, email } = req.body;
+  console.log(school, teacherName, email );
+  const mailOptions = {
+    from: user,
+    to: email,
+    subject: 'CreositySpace Survey Portal Invite',
+    html: `<p>Welcome to CreositySpace, ${teacherName}</p>
+           <p>Follow the following link to create an account on our survey portal:</p>
+           <p>Use the following information to create your account:<p>
+           <p>Name: ${teacherName}</p>
+           <p>School: ${school}</p>
+           <p>Email: ${email}</p>`
+  }
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.send(info.response);
+    }
   })
 })
 
@@ -130,6 +155,45 @@ app.post('/api/teacher/info', (req, res) => {
   console.log('params', params);
 
   connection.query(sql, params, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
+app.post('/api/teacher/update', (req, res) => {
+
+  //FILTERS SET OF PARAMETERS DOWN TO ONLY VALID VALUES
+  const { school, email, name } = req.body;
+  const parameters = { school, email, name, last_invite_sent: req.body.date };
+  const id = req.body.id;
+  const originalKeys = Object.keys(parameters);
+  originalKeys.forEach( key => {
+    if (!parameters[key]) {
+      delete parameters['key'];
+    }
+  })
+
+  const newKeys = Object.keys(parameters);
+  let args = Object.values(parameters);
+  args.push(id);
+
+  console.log("logging parameters at /api/teacher/update: ", parameters);
+  console.log("logging arguments: ", args);
+
+  //CONSTRUCTS SQL STATEMENT
+  let sql = `UPDATE teachers SET `;
+
+  for (let i = 0; i < newKeys.length; i++){
+    let sqlSegment = (i > 0) ? ', ' : '';
+    sqlSegment += `${newKeys[i]} = ?`;
+    sql += sqlSegment;
+  }
+
+  sql += ` WHERE id = ?`
+  console.log(sql);
+  console.log(args);
+
+  connection.query(sql, args, (err, result) => {
     if (err) throw err;
     res.send(result);
   })
