@@ -77,7 +77,7 @@ app.post('/api/teacher/invite', (req, res) => {
     to: email,
     subject: 'CreositySpace Survey Portal Invite',
     html: `<p>Welcome to CreositySpace, ${teacherName}</p>
-           <p>Follow the following link to create an account on our survey portal:</p>
+           <p>Follow the following link to create an account on our survey portal: localhost:3000/#/teacher/register</p>
            <p>Use the following information to create your account:<p>
            <p>Name: ${teacherName}</p>
            <p>School: ${school}</p>

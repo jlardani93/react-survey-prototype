@@ -64,7 +64,7 @@ export function createTeacher(_school, _name, _email){
     console.log("logging parameters in promise");
     console.log(_school, _name, _email);
     const req = new XMLHttpRequest();
-    const params = `school=${_school}&name=${_name}&email=${_email}`
+    const params = `school=${_school.toLowerCase()}&name=${_name.toLowerCase()}&email=${_email.toLowerCase()}`
 
     req.open('POST', '/api/teacher/create', true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -105,7 +105,7 @@ export function updateTeacher(_id, _school, _email, _name, _lastInviteEmailDate)
     console.log("logging parameters in promise");
     console.log(_school, _name);
     const req = new XMLHttpRequest();
-    const params = `id=${_id}&school=${_school}&email=${_email}&name=${_name}&date=${_lastInviteEmailDate}`;
+    const params = `id=${_id}&school=${_school.toLowerCase()}&email=${_email.toLowerCase()}&name=${_name.toLowerCase()}&date=${_lastInviteEmailDate}`;
 
     req.open('POST', '/api/teacher/update', true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -146,12 +146,7 @@ export function onQueryResponse(_table, _column, _value){
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = () => {
       if (req.readyState === 4 && req.status === 200) {
-        console.log(JSON.parse(req.responseText));
-        if (JSON.parse(req.responseText).length === 0){
-          resolve(false);
-        } else {
-          resolve(true);
-        }
+        resolve(JSON.parse(req.responseText))
       }
     }
     req.send(params);

@@ -16,13 +16,13 @@ function TeacherCreate(props){
       }
     }
     const onDatabaseDoesNotContainEntry = (boolean) => {
-      if (boolean === true){
+      if (boolean === false){
         dispatch(actions.createTeacher(_schoolName.value, _teacherName.value, _teacherEmail.value, createTeacherCallback))
       } else {
         alert("A teacher with that e-mail already exists in the system");
       }
     }
-    dispatch(actions.onQueryResponse(false, 'teachers', 'email', _teacherEmail.value, onDatabaseDoesNotContainEntry))
+    dispatch(actions.onQueryResponse('teachers', 'email', _teacherEmail.value, onDatabaseDoesNotContainEntry))
   }
   return(
     <div>

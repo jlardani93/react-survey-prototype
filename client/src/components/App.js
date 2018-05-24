@@ -5,7 +5,8 @@ import logo from './logo.svg';
 import './App.css';
 import APITest from './APITest'
 import Admin from './Admin/Admin'
-import Teacher from './Teacher/Teacher'
+import Teacher from './Teacher'
+import TeacherRegister from './Teacher/TeacherRegister'
 import Student from './Student'
 import Home from './Home'
 
@@ -43,7 +44,8 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/ApiTest' component={APITest} />
           <Route path='/Admin' component={Admin}/>
-          <Route path='/Teacher' component={Teacher} />
+          <Route exact path='/Teacher' component={Teacher} />
+          <Route exact path='/Teacher/Register' component={TeacherRegister} />
           <Route path='/Student' component={Student} />
         </Switch>
       </div>

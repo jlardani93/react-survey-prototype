@@ -4,11 +4,12 @@ import * as userActions from './userActions'
 export const { createUser } = databaseActions;
 export const { setUser } = userActions;
 
-export function onQueryResponse(boolean, table, column, value, callback){
+export function onQueryResponse(table, column, value, callback){
+  console.log(table, column, value);
   return (dispatch) => databaseActions.onQueryResponse(table, column, value)
-  .then(contains => {
-    console.log("contains", contains);
-    (contains === boolean) ? callback(true) : callback(false);
+  .then((response) => {
+    console.log("response", response);
+    (response.length !== 0) ? callback(true, response) : callback(false);
   })
 }
 
