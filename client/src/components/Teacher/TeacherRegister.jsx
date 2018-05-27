@@ -7,14 +7,20 @@ class TeacherRegister extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      showRegistrationForm: false
+      showRegistrationForm: false,
+      email: null,
+      id: null
     }
     this.handleConfirmationSubmission = this.handleConfirmationSubmission.bind(this)
+    this.handleNewUserSubmission = this.handleNewUserSubmission.bind(this)
   }
 
   _name
   _school
   _email
+  _username
+  _password
+  _passwordConfirmation
 
   handleConfirmationSubmission(event){
 
@@ -25,21 +31,48 @@ class TeacherRegister extends React.Component{
     const email = this._email.value.toLowerCase();
     const { dispatch } = this.props;
 
-    const onTeacherFound = ((boolean, response) => {
-      if (boolean && (name === response[0].name) && (school === response[0].school)) {
+    const onTeacherFound = ((boolean, response) => { //callback to be executed after dispatched action
+      if (boolean && (0 === response[0].user_id) && (name === response[0].name) && (school === response[0].school)) {
         console.log("entry found")
-        this.setState({showRegistrationForm: true})
+        this.setState({showRegistrationForm: true, email: email, id: response[0].id})
+        console.log("this component's state: ", this.state);
       } else {
-        alert('There was no teacher found with the submitted information')
+        alert('There was no available teacher slot with the submitted information')
       }
     }).bind(this);
 
     dispatch(actions.onQueryResponse('teachers', 'email', email, onTeacherFound));
   }
 
+  handleNewUserSubmission(event){
+
+    event.preventDefault();
+
+    const password = this._password.value;
+    const passwordConfirmation = this._passwordConfirmation.value;
+    const username = this._username.value;
+    const email = this.state.email;
+    const id = this.state.id;
+    const { dispatch } = this.props;
+
+    const onUserAdded = ((response) => { //callback to be executed after dispatched action
+      if (response.affectedRows > 0){
+        alert("user was added successfully");
+      } else {
+        alert("user was not added successfully");
+      }
+    }).bind(this);
+
+    if (password === passwordConfirmation){
+      dispatch(actions.createUser(username, password, email, 'teacher', onUserAdded, id))
+    } else {
+      alert("The passwords entered do not match");
+    }
+  }
+
   render(){
 
-    const confirmationForm = (
+    const confirmationForm = ( //form initially shown to confirm that teacher entry exists
       <div>
         <p>Complete the following to confirm that you have been invited to create a survey portal account</p>
         <form onSubmit={this.handleConfirmationSubmission}>
@@ -60,10 +93,10 @@ class TeacherRegister extends React.Component{
       </div>
     )
 
-    const registrationForm = (
+    const registrationForm = ( //form used to create new teacher user for survey platform
       <div>
         <p>Complete the following to create a new user account on the survey platform</p>
-        <form>
+        <form onSubmit={this.handleNewUserSubmission}>
           <div>
             <label>Username:</label>
             <input type="text" ref={ input => this._username = input }/>

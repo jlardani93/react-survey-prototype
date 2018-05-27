@@ -1,7 +1,6 @@
 import * as databaseActions from './databaseActions'
 import * as userActions from './userActions'
 
-export const { createUser } = databaseActions;
 export const { setUser } = userActions;
 
 export function onQueryResponse(table, column, value, callback){
@@ -10,6 +9,18 @@ export function onQueryResponse(table, column, value, callback){
   .then((response) => {
     console.log("response", response);
     (response.length !== 0) ? callback(true, response) : callback(false);
+  })
+}
+
+export function createUser(username, password, email, role, callback, userId){
+  console.log(username, password, email, role, userId);
+  return (dispatch) => databaseActions.createUser(username, password, email, role)
+  .then((response) => {
+    callback(response);
+    if (response.affectedRows > 0) {
+      databaseActions.updateTeacher(userId, response.insertId, '', '', '', '')
+      .then(response => console.log(response));
+    }
   })
 }
 
@@ -33,7 +44,7 @@ export function createTeacher(school, name, email, createTeacherCallback) {
 
 export function updateTeacher(_teacherId, _school, _email, _name, _lastInviteEmailDate) {
   console.log("trying to update teacher");
-  return (dispatch) => databaseActions.updateTeacher(_teacherId, _school, _email, _name, _lastInviteEmailDate)
+  return (dispatch) => databaseActions.updateTeacher(_teacherId, '', _school, _email, _name, _lastInviteEmailDate)
   .then(response => {
     console.log("updateTeacher response:", response);
     //updateTeacherCallback();

@@ -114,8 +114,16 @@ app.get('/api/school/info', (req, res) => {
 
 
 app.post('/api/createUser', (req, res) => {
-  console.log(req.body.username);
-  res.send({ message: "We received your post" });
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
+  const role = req.body.role;
+  console.log("logging parameters", username, password, email, role);
+  const sql = "INSERT INTO users (username, role, password, email) VALUES ( ?, ?, ?, ?)"
+  connection.query(sql, [username, role, password, email], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
 })
 
 app.post('/api/teacher/create', (req, res) => {
@@ -164,12 +172,12 @@ app.post('/api/teacher/update', (req, res) => {
 
   //FILTERS SET OF PARAMETERS DOWN TO ONLY VALID VALUES
   const { school, email, name } = req.body;
-  const parameters = { school, email, name, last_invite_sent: req.body.date };
+  const parameters = { user_id: req.body.userId, school, email, name, last_invite_sent: req.body.date };
   const id = req.body.id;
   const originalKeys = Object.keys(parameters);
   originalKeys.forEach( key => {
-    if (!parameters[key]) {
-      delete parameters['key'];
+    if (!parameters[key] || parameters[key] === '') {
+      delete parameters[key];
     }
   })
 
