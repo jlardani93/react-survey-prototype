@@ -14,12 +14,14 @@ export default function AdminNavbar(props){
           }
 
           .navbar div {
-            cursor: pointer; 
+            cursor: pointer;
           }
         `}
       </style>
       <div className="navbar">
         <div onClick={()=>{props.onNavigate('teachers')}}><span>Teachers</span></div>
+        <div onClick={()=>{props.onNavigate('surveys')}}><span>Surveys</span></div>
+        <div onClick={()=>{props.onNavigate('modules')}}><span>Modules</span></div>
       </div>
     </div>
   )

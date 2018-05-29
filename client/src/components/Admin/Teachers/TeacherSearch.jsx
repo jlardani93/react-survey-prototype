@@ -6,7 +6,7 @@ export default function TeacherSearch(props){
 
   function handleFormSubmit(event){
     event.preventDefault();
-    if (_school.value === '-none-') _school.value = null; 
+    if (_school.value === '-all-') _school.value = null;
     props.onTeacherSearch(_school.value, _name.value)
   }
 
@@ -17,7 +17,7 @@ export default function TeacherSearch(props){
           <div>
             <label>School: </label>
             <select ref={input => _school = input}>
-                <option key="defaultNull" value={null}>-none-</option>
+                <option key="defaultNull" value={null}>-all-</option>
               {props.schools.map(school =>
                 <option key={school.school} value={school.school}>{school.school}</option>
               )}
