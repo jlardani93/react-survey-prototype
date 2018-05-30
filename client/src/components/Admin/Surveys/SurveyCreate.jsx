@@ -11,6 +11,8 @@ class SurveyCreate extends React.Component {
     this.handleAddQuestion = this.handleAddQuestion.bind(this);
   }
 
+  _title
+
   handleAddQuestion(question){
     console.log(question);
     const newState = Object.create(this.state);
@@ -23,6 +25,8 @@ class SurveyCreate extends React.Component {
     console.log(this.state);
     return(
       <div>
+        <label>Survey Title:</label>
+        <input type='text' ref={ input => this._title = input} />
         <p>This is the SurveyCreate Component</p>
         <SurveyQuestion onAddQuestion={this.handleAddQuestion}/>
         <SurveyPreview survey={this.state.newSurvey}/>

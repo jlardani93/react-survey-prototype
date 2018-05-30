@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import TeacherCreate from './TeacherCreate'
 import TeachersList from './TeachersList'
 import TeacherSearch from './TeacherSearch'
-import * as actions from './../../../actions'
+import * as actions from './../../../operations'
 
 class TeachersPanel extends React.Component {
 
