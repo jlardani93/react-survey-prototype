@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import SurveyQuestion from './SurveyQuestion'
 import SurveyPreview from './SurveyPreview'
+import * as operations from './../../../operations'
 
 class SurveyCreate extends React.Component {
   constructor(props){
@@ -9,6 +11,7 @@ class SurveyCreate extends React.Component {
       newSurvey: []
     }
     this.handleAddQuestion = this.handleAddQuestion.bind(this);
+    this.handleCreateSurvey = this.handleCreateSurvey.bind(this);
   }
 
   _title
@@ -21,18 +24,30 @@ class SurveyCreate extends React.Component {
     this.setState(newState);
   }
 
+  handleCreateSurvey(){
+    const { dispatch } = this.props;
+    const titleElement = document.getElementById('surveyTitle');
+    if (titleElement.value && this.state.newSurvey.length !== 0) {
+      console.log("about to create survey");
+      dispatch(operations.createSurvey(titleElement.value, this.state.newSurvey));
+    } else {
+      alert("Be sure to provide a title for your survey!");
+    }
+  }
+
   render(){
     console.log(this.state);
     return(
       <div>
         <label>Survey Title:</label>
-        <input type='text' ref={ input => this._title = input} />
+        <input id='surveyTitle' type='text' ref={ input => this._title = input} />
         <p>This is the SurveyCreate Component</p>
         <SurveyQuestion onAddQuestion={this.handleAddQuestion}/>
         <SurveyPreview survey={this.state.newSurvey}/>
+        <button onClick={this.handleCreateSurvey}>Save Survey</button>
       </div>
     )
   }
 }
 
-export default SurveyCreate
+export default connect()(SurveyCreate)

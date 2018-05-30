@@ -1,9 +1,11 @@
 import * as emailOperations from './emailOperations'
+import * as surveyTemplateOperations from './surveyTemplateOperations'
 import * as teacherOperations from './teacherOperations'
 import * as userOperations from './userOperations'
 import * as actions from  './../actions'
 
 export const { sendInviteEmail, sendEmail } = emailOperations
+export const { createSurvey } = surveyTemplateOperations
 export const { createTeacher, updateTeacher, getTeachers, getSchools} = teacherOperations
 export const { createUser, login} = userOperations
 export const { databaseActions, setUser} = actions
