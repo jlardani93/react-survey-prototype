@@ -17,6 +17,58 @@ export function createUser(_username, _password, _email, _role){
   })
 }
 
+export function createSurveyTemplate(_title){
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    const params = `title=${_title}`;
+    req.open('POST', '/api/surveyTemplate/create', true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(params);
+  })
+}
+
+export function createQuestion(_surveyTemplateId, _questionNumber, _questionText, _questionType){
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    const params = `questionNumber=${_questionNumber}&questionText=${_questionText}&questionType=${_questionType}`;
+    req.open('POST', '/api/surveyTemplate/question/create', true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(params);
+  })
+  //Creates entry in JOIN table between survey_templates and survey_questions
+  .then( response => {
+    return new Promise ((resolve, reject) => {
+      const surveyQuestionId = response.insertId;
+      const req = new XMLHttpRequest();
+      const params = `surveyTemplateId=${_surveyTemplateId}&surveyQuestionId=${surveyQuestionId}`;
+      req.open('POST', '/api/surveyTemplate/question/join', true);
+      req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+      req.onreadystatechange = () => {
+        if (req.readyState === 4 && req.status === 200) {
+          console.log(req.responseText);
+          resolve(JSON.parse(req.responseText));
+        }
+      }
+      req.send(params);
+    })
+  })
+}
+
 //Send e-mail on new teacher creation:
 //Can send e-mail if teacher has not been sent an e-mail that day
 //Can send e-mail if teacher requests to be sent e-mail with invitation to create account
