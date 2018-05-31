@@ -237,6 +237,15 @@ app.get('/api/surveyTemplates/info', (req, res) => {
   })
 })
 
+app.get('/api/questions/info/:id', (req, res) => {
+  const sql = 'SELECT survey_questions.* FROM templates_questions JOIN survey_questions ON (templates_questions.question_id = survey_questions.id) WHERE templates_questions.template_id = ? ORDER BY question_number';
+  console.log("Querying database for survey questions");
+  connection.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
 app.post('/api/surveyTemplate/question/create', (req, res) => {
   console.log("logging parameters");
   console.log(req.body.questionNumber, req.body.questionText, req.body.questionType);

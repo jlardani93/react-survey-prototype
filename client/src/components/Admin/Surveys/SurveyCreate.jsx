@@ -30,10 +30,7 @@ class SurveyCreate extends React.Component {
     const onCreateSurvey = ( response => {
       if (response.affectedRows !== 0) {
         alert("survey was added successfully")
-        const newState = {
-          newSurvey: []
-        }
-        this.setState(newState);
+        this.setState({newSurvey: []});
       } else {
         alert("survey was not added successfully")
       }

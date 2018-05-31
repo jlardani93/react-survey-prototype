@@ -83,10 +83,20 @@ export function createQuestion(_surveyTemplateId, _questionNumber, _questionText
   })
 }
 
-//Send e-mail on new teacher creation:
-//Can send e-mail if teacher has not been sent an e-mail that day
-//Can send e-mail if teacher requests to be sent e-mail with invitation to create account
-//Needs e-mail, URL for registration, teacher's name, and school
+export function getSurveyQuestions(_surveyTemplateId){
+  return new Promise((resolve, reject) => {
+    console.log("logging parameters in getSurveyQuestions promise:", _surveyTemplateId);
+    const req = new XMLHttpRequest();
+    req.open('GET', `/api/questions/info/${_surveyTemplateId}`, true);
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200){
+        resolve(JSON.parse(req.responseText))
+      }
+    }
+    req.send();
+  })
+}
+
 
 export function sendInviteEmail(_school, _teacherName, _email) {
   return new Promise((resolve, reject) => {

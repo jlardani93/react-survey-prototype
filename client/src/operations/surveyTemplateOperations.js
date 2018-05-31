@@ -15,7 +15,7 @@ export function getSurveyTemplates(success){
   return (dispatch) => databaseActions.getSurveyTemplates()
   .then(response => {
     console.log("getSurveyTemplates response: ", response);
-    success(response); 
+    success(response);
   })
 }
 
@@ -23,5 +23,13 @@ export function createQuestion(insertId, questionNumber, question, questionType)
   return (dispatch) => databaseActions.createQuestion(insertId, questionNumber, question, questionType)
   .then(response => {
     console.log("createQuestion response: ", response);
+  })
+}
+
+export function getSurveyQuestions(surveyTemplateId, success){
+  return (dispatch) => databaseActions.getSurveyQuestions(surveyTemplateId)
+  .then(response => {
+    console.log("getSurveyQuestions response: ", response);
+    success(response);
   })
 }

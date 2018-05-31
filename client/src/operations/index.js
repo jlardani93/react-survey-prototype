@@ -5,7 +5,7 @@ import * as userOperations from './userOperations'
 import * as actions from  './../actions'
 
 export const { sendInviteEmail, sendEmail } = emailOperations
-export const { createSurvey, getSurveyTemplates } = surveyTemplateOperations
+export const { createSurvey, getSurveyTemplates, getSurveyQuestions } = surveyTemplateOperations
 export const { createTeacher, updateTeacher, getTeachers, getSchools} = teacherOperations
 export const { createUser, login} = userOperations
 export const { databaseActions, setUser} = actions
