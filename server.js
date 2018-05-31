@@ -229,6 +229,14 @@ app.post('/api/surveyTemplate/create', (req, res) => {
   })
 })
 
+app.get('/api/surveyTemplates/info', (req, res) => {
+  const sql = 'SELECT id, title FROM survey_templates';
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
 app.post('/api/surveyTemplate/question/create', (req, res) => {
   console.log("logging parameters");
   console.log(req.body.questionNumber, req.body.questionText, req.body.questionType);

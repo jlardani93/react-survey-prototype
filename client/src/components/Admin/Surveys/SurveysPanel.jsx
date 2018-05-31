@@ -1,13 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import SurveyCreate from './SurveyCreate.jsx'
+import SurveyCreate from './SurveyCreate'
+import SurveyTemplates from './SurveyTemplates'
+import * as operations from './../../../operations'
 
 class SurveysPanel extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-      showNewSurvey: false
+      showNewSurvey: false,
+      surveyTemplates: []
     }
     this.handleShowNewSurvey = this.handleShowNewSurvey.bind(this);
   }
@@ -15,6 +18,16 @@ class SurveysPanel extends React.Component {
   handleShowNewSurvey(){
     this.setState({showNewSurvey: true})
   }
+
+  componentDidMount(){
+    const { dispatch } = this.props;
+    const onGetSurveyTemplates = (surveyTemplates) => {
+      this.setState({surveyTemplates: surveyTemplates})
+    }
+    dispatch(operations.getSurveyTemplates(onGetSurveyTemplates));
+  }
+
+
 
   render(){
     return(
@@ -25,6 +38,7 @@ class SurveysPanel extends React.Component {
         {/*Create survey*/}
         {/*Modify surveys?*/}
         {(this.state.showNewSurvey) ? <SurveyCreate /> : <span></span>}
+        <SurveyTemplates titles={this.state.surveyTemplates} />
       </div>
     )
   }

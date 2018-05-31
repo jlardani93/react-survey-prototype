@@ -27,9 +27,20 @@ class SurveyCreate extends React.Component {
   handleCreateSurvey(){
     const { dispatch } = this.props;
     const titleElement = document.getElementById('surveyTitle');
+    const onCreateSurvey = ( response => {
+      if (response.affectedRows !== 0) {
+        alert("survey was added successfully")
+        const newState = {
+          newSurvey: []
+        }
+        this.setState(newState);
+      } else {
+        alert("survey was not added successfully")
+      }
+    }).bind(this);
     if (titleElement.value && this.state.newSurvey.length !== 0) {
       console.log("about to create survey");
-      dispatch(operations.createSurvey(titleElement.value, this.state.newSurvey));
+      dispatch(operations.createSurvey(titleElement.value, this.state.newSurvey, onCreateSurvey));
     } else {
       alert("Be sure to provide a title for your survey!");
     }

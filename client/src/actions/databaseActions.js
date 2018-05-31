@@ -34,6 +34,20 @@ export function createSurveyTemplate(_title){
   })
 }
 
+export function getSurveyTemplates(){
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', '/api/surveyTemplates/info', true);
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(null);
+  })
+}
+
 export function createQuestion(_surveyTemplateId, _questionNumber, _questionText, _questionType){
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest();
