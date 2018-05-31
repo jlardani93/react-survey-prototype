@@ -31,6 +31,7 @@ class SurveyCreate extends React.Component {
       if (response.affectedRows !== 0) {
         alert("survey was added successfully")
         this.setState({newSurvey: []});
+        this.props.onAddNewSurvey();
       } else {
         alert("survey was not added successfully")
       }

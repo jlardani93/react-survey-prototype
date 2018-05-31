@@ -16,6 +16,7 @@ class SurveysPanel extends React.Component {
     }
     this.handleShowNewSurvey = this.handleShowNewSurvey.bind(this);
     this.handleSelectSurvey = this.handleSelectSurvey.bind(this);
+    this.handleAddNewSurvey = this.handleAddNewSurvey.bind(this);
   }
 
   handleShowNewSurvey(){
@@ -29,6 +30,14 @@ class SurveysPanel extends React.Component {
       this.setState({selectedSurveyQuestions: surveyQuestions})
     }).bind(this);
     dispatch(operations.getSurveyQuestions(surveyTemplateId, onGetSurveyQuestions));
+  }
+
+  handleAddNewSurvey(){
+    const { dispatch } = this.props;
+    const onGetSurveyTemplates = (surveyTemplates) => {
+      this.setState({surveyTemplates: surveyTemplates})
+    }
+    dispatch(operations.getSurveyTemplates(onGetSurveyTemplates));
   }
 
   componentDidMount(){
@@ -46,10 +55,7 @@ class SurveysPanel extends React.Component {
       <div>
         <p>This is the SurveysPanel Component</p>
         <button onClick={this.handleShowNewSurvey}>Create a new survey</button>
-        {/*Show surveys*/}
-        {/*Create survey*/}
-        {/*Modify surveys?*/}
-        {(this.state.showNewSurvey) ? <SurveyCreate /> : <span></span>}
+        {(this.state.showNewSurvey) ? <SurveyCreate onAddNewSurvey={this.handleAddNewSurvey} /> : <span></span>}
         <SurveyTemplates titles={this.state.surveyTemplates} onSelectSurvey={this.handleSelectSurvey} />
         {(this.state.selectedSurveyQuestions) ? <SurveyInfo surveyQuestions={this.state.selectedSurveyQuestions} /> : <span></span>}
       </div>

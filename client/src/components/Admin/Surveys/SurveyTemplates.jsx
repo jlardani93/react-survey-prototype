@@ -10,6 +10,7 @@ export default function SurveyTemplates(props){
   return(
     <div>
       <select id="survey" onChange={handleSelection}>
+        <option value="" disabled selected hidden>Choose a survey to preview</option>
       {props.titles.map( title =>
         <option key={title.id} value={title.id}>{title.title}</option>
       )}
