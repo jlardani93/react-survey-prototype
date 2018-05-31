@@ -268,4 +268,15 @@ app.post('/api/surveyTemplate/question/join', (req, res) => {
   })
 })
 
+app.post('/api/module/create', (req, res) => {
+  console.log("logging parameters");
+  console.log(req.body.moduleTitle, req.body.surveyTemplateId);
+  const { moduleTitle, surveyTemplateId } = req.body;
+  const sql = 'INSERT INTO modules (title, survey_template_id) VALUES ( ?, ? )';
+  connection.query(sql, [moduleTitle, surveyTemplateId], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
