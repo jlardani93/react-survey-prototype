@@ -10,12 +10,28 @@ export function createTeacher(school, name, email, createTeacherCallback) {
   })
 }
 
+export function addModule(moduleId, teacherId, success){
+  return (dispatch) => databaseActions.joinModuleTeacher(moduleId, teacherId)
+  .then(response => {
+    console.log("addModule response: ", response);
+    success(response);
+  })
+}
+
 export function updateTeacher(_teacherId, _school, _email, _name, _lastInviteEmailDate) {
   console.log("trying to update teacher");
   return (dispatch) => databaseActions.updateTeacher(_teacherId, '', _school, _email, _name, _lastInviteEmailDate)
   .then(response => {
     console.log("updateTeacher response:", response);
     //updateTeacherCallback();
+  })
+}
+
+export function getTeacher(success, teacherId){
+  return (dispatch) => databaseActions.getTeacher(teacherId)
+  .then(response => {
+    console.log("getTeacher response: ", response);
+    success(response);
   })
 }
 

@@ -6,9 +6,9 @@ import * as userOperations from './userOperations'
 import * as actions from  './../actions'
 
 export const { sendInviteEmail, sendEmail } = emailOperations
-export const { createModule } = moduleOperations
+export const { createModule, getModules } = moduleOperations
 export const { createSurvey, getSurveyTemplates, getSurveyQuestions } = surveyTemplateOperations
-export const { createTeacher, updateTeacher, getTeachers, getSchools} = teacherOperations
+export const { createTeacher, addModule, updateTeacher, getTeacher, getTeachers, getSchools} = teacherOperations
 export const { createUser, login} = userOperations
 export const { databaseActions, setUser} = actions
 

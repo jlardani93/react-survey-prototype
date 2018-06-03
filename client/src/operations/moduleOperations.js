@@ -7,3 +7,11 @@ export function createModule(moduleTitle, surveyTemplateId, success){
     success(response);
   })
 }
+
+export function getModules(success){
+  return (dispatch) => databaseActions.getModules()
+  .then(response => {
+    console.log("getModules response: ", response);
+    success(response);
+  })
+}

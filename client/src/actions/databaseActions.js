@@ -155,6 +155,22 @@ export function createTeacher(_school, _name, _email){
   })
 }
 
+export function getTeacher(_teacherId){
+  return new Promise((resolve, reject) => {
+    console.log("loggin parameters in promise");
+    console.log(_teacherId);
+    const req = new XMLHttpRequest();
+    req.open('GET', `/api/teacher/info/${_teacherId}`, true);
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200){
+        console.log(req.responseText);
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send();
+  })
+}
+
 
 //SEARCHES FOR TEACHERS BY SCHOOL AND NAME
 export function getTeachers(_school = '', _name = ''){
@@ -236,6 +252,35 @@ export function createModule(_moduleTitle, _surveyTemplateId){
     const req = new XMLHttpRequest();
     const params = `moduleTitle=${_moduleTitle}&surveyTemplateId=${_surveyTemplateId}`;
     req.open('POST', '/api/module/create', true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send(params);
+  })
+}
+
+export function getModules(){
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', '/api/module/info', true)
+    req.onreadystatechange = () => {
+      if (req.readyState === 4 && req.status === 200) {
+        resolve(JSON.parse(req.responseText));
+      }
+    }
+    req.send();
+  })
+}
+
+export function joinModuleTeacher(_moduleId, _teacherId){
+  return new Promise((resolve, reject) => {
+    console.log(_moduleId, _teacherId);
+    const req = new XMLHttpRequest();
+    const params = `moduleId=${_moduleId}&teacherId=${_teacherId}`
+    req.open('POST', '/api/teacher/module/join', true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = () => {
       if (req.readyState === 4 && req.status === 200) {

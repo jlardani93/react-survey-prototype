@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import * as actions from './../../operations'
 import AdminNavbar from './AdminNavbar'
 import TeachersPanel from './Teachers/TeachersPanel'
-import SurveysPanel from './Surveys/SurveysPanel'
+import SurveyTemplatesPanel from './Surveys/SurveysPanel'
 import ModulesPanel from './Modules/ModulesPanel'
+import DataPanel from './Data'
 
 class Admin extends React.Component {
 
@@ -32,10 +33,12 @@ class Admin extends React.Component {
       switch(this.state.shownPanel){
         case 'teachers':
           return <TeachersPanel />
-        case 'surveys':
-          return <SurveysPanel />
+        case 'survey templates':
+          return <SurveyTemplatesPanel />
         case 'modules':
           return <ModulesPanel />
+        case 'data':
+          return <DataPanel />
         default:
           return null;
       }

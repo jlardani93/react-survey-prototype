@@ -20,8 +20,9 @@ export default function AdminNavbar(props){
       </style>
       <div className="navbar">
         <div onClick={()=>{props.onNavigate('teachers')}}><span>Teachers</span></div>
-        <div onClick={()=>{props.onNavigate('surveys')}}><span>Surveys</span></div>
+        <div onClick={()=>{props.onNavigate('survey templates')}}><span>Survey Templates</span></div>
         <div onClick={()=>{props.onNavigate('modules')}}><span>Modules</span></div>
+        <div onClick={()=>{props.onNavigate('data')}}><span>Data</span></div>
       </div>
     </div>
   )

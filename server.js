@@ -207,6 +207,14 @@ app.post('/api/teacher/update', (req, res) => {
   })
 })
 
+app.get('/api/teacher/info/:id', (req, res) => {
+  const sql = 'SELECT * FROM modules JOIN modules_teachers ON (modules.id = modules_teachers.module_id) JOIN teachers ON (teachers.id = modules_teachers.teacher_id) WHERE teachers.id = ?';
+  connection.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
 app.post('/api/checkEntry', (req, res) => {
   console.log("logging parameters");
   console.log(req.body.table, req.body.column, req.body.value);
@@ -230,7 +238,7 @@ app.post('/api/surveyTemplate/create', (req, res) => {
 })
 
 app.get('/api/surveyTemplates/info', (req, res) => {
-  const sql = 'SELECT id, title FROM survey_templates';
+  const sql = 'SELECT id, title FROM survey_templates ORDER BY title';
   connection.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -274,6 +282,25 @@ app.post('/api/module/create', (req, res) => {
   const { moduleTitle, surveyTemplateId } = req.body;
   const sql = 'INSERT INTO modules (title, survey_template_id) VALUES ( ?, ? )';
   connection.query(sql, [moduleTitle, surveyTemplateId], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
+app.get('/api/module/info', (req, res) => {
+  const sql = 'SELECT id, title FROM modules ORDER BY title';
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+})
+
+app.post('/api/teacher/module/join', (req, res) => {
+  console.log("logging parameters");
+  console.log(req.body.moduleId, req.body.teacherId);
+  const { moduleId, teacherId } = req.body;
+  const sql = 'INSERT INTO modules_teachers (module_id, teacher_id) VALUES ( ?, ? )';
+  connection.query(sql, [moduleId, teacherId], (err, result) => {
     if (err) throw err;
     res.send(result);
   })

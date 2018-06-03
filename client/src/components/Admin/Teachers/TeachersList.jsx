@@ -19,7 +19,7 @@ export default function TeachersList(props){
             width: 100%;
             border: 1px solid black;
             vertical-align: middle;
-            margin: 0; 
+            margin: 0;
           }
         `}
       </style>
@@ -38,6 +38,7 @@ export default function TeachersList(props){
             <p>{teacher.school}</p>
             <p>{teacher.email}</p>
             <p>{teacher.name}</p>
+            <button onClick={()=>{props.onOpenAddModuleForm(teacher.id)}}>Add Module</button>
           </div>
         )}
       </div>
