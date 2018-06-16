@@ -1,9 +1,23 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const checkEntryRouter = require('./checkEntry.js');
+const createUserRouter = require('./createUser.js');
+const loginRouter = require('./login.js');
+const moduleRouter = require('./module.js');
+const questionsRouter = require('./questions.js');
+const teacherRouter = require('./teacher.js');
+const schoolRouter = require('./school.js');
+const surveyTemplateRouter = require('./surveyTemplate.js');
+const surveyTemplatesRouter = require('./surveyTemplates.js');
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = {
+  checkEntryRouter,
+  createUserRouter,
+  loginRouter,
+  moduleRouter,
+  questionsRouter,
+  schoolRouter,
+  surveyTemplateRouter,
+  surveyTemplatesRouter,
+  teacherRouter
+}
