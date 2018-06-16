@@ -1,4 +1,4 @@
-import * as dbActions from './databaseActions'
+import dbActions from './databaseActions'
 import * as userActions from './userActions'
 
 export const { setUser } = userActions;
