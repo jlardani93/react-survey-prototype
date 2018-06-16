@@ -6,6 +6,7 @@ const moduleRouter = require('./module.js');
 const questionsRouter = require('./questions.js');
 const teacherRouter = require('./teacher.js');
 const schoolRouter = require('./school.js');
+const surveyRouter = require('./survey.js');
 const surveyTemplateRouter = require('./surveyTemplate.js');
 const surveyTemplatesRouter = require('./surveyTemplates.js');
 const router = express.Router();
@@ -17,6 +18,7 @@ module.exports = {
   moduleRouter,
   questionsRouter,
   schoolRouter,
+  surveyRouter,
   surveyTemplateRouter,
   surveyTemplatesRouter,
   teacherRouter

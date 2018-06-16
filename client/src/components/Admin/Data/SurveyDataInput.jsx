@@ -4,11 +4,15 @@ import SurveyDataInputRow from './SurveyDataInputRow'
 export default function SurveyDataInput(props){
 
   const inputRows = [];
-  let i = 1;
+  let i = 0;
   if (parseInt(props.numNewSurveys)){
     Array.from(Array(parseInt(props.numNewSurveys)).keys()).map(() => {
       inputRows.push(
-        <SurveyDataInputRow key={i} numQuestions={props.surveyQuestions.length}/>
+        <SurveyDataInputRow key={i}
+        surveyIndex={i}
+        numQuestions={props.surveyQuestions.length}
+        onUpdateNewSurveys={props.onUpdateNewSurveys}
+        onSubmitSurveys={props.onSubmitSurveys}/>
       )
       i++;
     })
@@ -20,12 +24,14 @@ export default function SurveyDataInput(props){
       {`
 
         .inputRow {
+          margin-left: 20px;
+          margin-right: 20px;
           display: grid;
           grid-template-columns: repeat(${props.surveyQuestions.length}, 1fr);
         }
         .inputCell {
           border: 1px solid black;
-          height: 10px;
+          height: 30px;
         }
 
         .inputField {
@@ -37,11 +43,15 @@ export default function SurveyDataInput(props){
       <div>
         <p>This is the SurveyDataInputFields component {props.numNewSurveys}</p>
         <div>
-          <div>
+          <div class="inputRow">
+            {props.surveyQuestions.map( question =>
+              <div class="inputCell">
+                <p>{question.question}</p>
+              </div>
+            )}
           </div>
-          <div>
           {inputRows}
-          </div>
+          <button onClick={() => {props.onSubmitSurveys()}}>Submit all surveys</button>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ export default function ModuleSearch(props){
 
   function handleFormSubmission(e){
     e.preventDefault();
-    console.log(_module.value); 
+    props.onModuleSelection(_module.value);
   }
 
   return(

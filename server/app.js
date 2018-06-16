@@ -22,7 +22,7 @@ const CREDENTIALS = require('./__EMAIL__.js')
 const routes = require('./routes/index.js');
 
 const app = express();
-const {checkEntryRouter, createUserRouter, loginRouter, moduleRouter, questionsRouter,  schoolRouter, surveyTemplateRouter, surveyTemplatesRouter, teacherRouter} = routes;
+const {checkEntryRouter, createUserRouter, loginRouter, moduleRouter, questionsRouter, schoolRouter, surveyRouter, surveyTemplateRouter, surveyTemplatesRouter, teacherRouter} = routes;
 const port = process.env.PORT || 5000;
 const { user, pass } = CREDENTIALS.CREDENTIALS;
 
@@ -43,6 +43,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/module', moduleRouter);
 app.use('/api/questions', questionsRouter);
 app.use('/api/school', schoolRouter);
+app.use('/api/survey', surveyRouter);
 app.use('/api/surveyTemplate', surveyTemplateRouter);
 app.use('/api/surveyTemplates', surveyTemplatesRouter);
 app.use('/api/teacher', teacherRouter);

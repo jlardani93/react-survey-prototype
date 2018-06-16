@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import ModuleSearch from './ModuleSearch'
 import SchoolSearch from './SchoolSearch'
 import TeacherSearch from './TeacherSearch'
+import SurveyTemplateSearch from './SurveyTemplateSearch'
+import CreateSurveyData from './CreateSurveyData'
 import * as operations from './../../../operations'
 
 class DataPanel extends React.Component {
@@ -13,12 +15,18 @@ class DataPanel extends React.Component {
       schools: [],
       teachers: [],
       modules: [],
+      surveyTemplates: [],
+      surveyQuestions: [],
+      completedSurveysData: {},
       selectedSchoolName: null,
       selectedTeacherId: null,
-      selectedModuleId: null
+      selectedModuleId: null,
+      selectedSurveyTemplate: null
     }
     this.handleSchoolSelection = this.handleSchoolSelection.bind(this);
     this.handleTeacherSelection = this.handleTeacherSelection.bind(this);
+    this.handleModuleSelection = this.handleModuleSelection.bind(this);
+    this.handleSurveyTemplateSelection = this.handleSurveyTemplateSelection.bind(this);
   }
 
   handleSchoolSelection(schoolName){
@@ -41,6 +49,35 @@ class DataPanel extends React.Component {
     dispatch(operations.getTeacher(onGetModules, teacherId));
   }
 
+  handleModuleSelection(moduleId){
+    console.log("handleModuleSelection arguments: ", moduleId);
+    const { dispatch } = this.props;
+    const onGetSurveyTemplates = (function(response){
+      const newSurveyTemplates = response;
+      this.setState({surveyTemplates: newSurveyTemplates})
+    }).bind(this);
+    this.setState({selectedModuleId: moduleId});
+    dispatch(operations.getSurveyTemplates(onGetSurveyTemplates, moduleId));
+  }
+
+  handleSurveyTemplateSelection(surveyTemplateId){
+    const { dispatch } = this.props;
+
+    const getSurveyQuestionsCallback = (function(response){
+      this.setState({surveyQuestions: response});
+      console.log(response);
+    }).bind(this);
+
+    const getSurveyResponsesCallback = (function(response){
+      this.setState({completedSurveysData: response});
+      console.log(response);
+    }).bind(this);
+
+    dispatch(operations.getSurveyQuestions(surveyTemplateId, getSurveyQuestionsCallback));
+    dispatch(operations.getSurveyResponses(this.state.selectedTeacherId, surveyTemplateId, getSurveyResponsesCallback));
+    this.setState({selectedSurveyTemplate: surveyTemplateId});
+  }
+
   componentDidMount(){
     const { dispatch } = this.props;
     const getSchoolsCallback = (function(response){
@@ -55,8 +92,16 @@ class DataPanel extends React.Component {
         <p>This is the DataPanel component</p>
         <div>
           <SchoolSearch schools={this.state.schools} onSchoolSelection={this.handleSchoolSelection}/>
-          {(this.state.teachers.length) ? <TeacherSearch teachers={this.state.teachers} onTeacherSelection={this.handleTeacherSelection}/> : <span></span>}
-          {(this.state.modules.length) ? <ModuleSearch modules={this.state.modules}/> : <span></span>}
+          {(this.state.teachers.length) ?
+            <TeacherSearch teachers={this.state.teachers} onTeacherSelection={this.handleTeacherSelection}/> : <span></span>}
+          {(this.state.modules.length) ?
+            <ModuleSearch modules={this.state.modules} onModuleSelection={this.handleModuleSelection}/> : <span></span>}
+          {(this.state.surveyTemplates.length) ?
+            <SurveyTemplateSearch surveyTemplates={this.state.surveyTemplates} onSurveyTemplateSelection = {this.handleSurveyTemplateSelection}/> : <span></span>}
+          {(this.state.selectedSurveyTemplate) ?
+            <CreateSurveyData surveyQuestions={this.state.surveyQuestions}
+            surveyTemplateId={this.state.selectedSurveyTemplate}
+            teacherId={this.state.selectedTeacherId}/> : <span></span>}
         </div>
       </div>
     )

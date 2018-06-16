@@ -7,7 +7,7 @@
     "client": "cd client && yarn start",
     "server": "nodemon server/server.js",
     "dev": "set NODE_ENV=development&& start cmd /k npm test &&  start cmd /k nodemon --exec mocha server/**/*.test.js && concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "prod": "set NODE_ENV=production&& concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "prod": "set NODE_ENV=production&& concurrently --kill-others-on-fail \"yarn server\" \"start cmd /k yarn client\"",
     "test": "cd client && npm test"
   },
   "dependencies": {

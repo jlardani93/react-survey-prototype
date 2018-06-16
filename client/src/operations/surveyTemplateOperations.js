@@ -11,8 +11,9 @@ export function createSurvey(title, questions, success){
   })
 }
 
-export function getSurveyTemplates(success){
-  return (dispatch) => databaseActions.getSurveyTemplates()
+export function getSurveyTemplates(success, moduleId){
+  console.log("getSurveyTemplates argument: ", moduleId);
+  return (dispatch) => databaseActions.getSurveyTemplates(moduleId)
   .then(response => {
     console.log("getSurveyTemplates response: ", response);
     success(response);
