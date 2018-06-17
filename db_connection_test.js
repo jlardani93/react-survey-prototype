@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
   port: "8889",
   user: "root",
   password: "root",
-  database: "creosityspace"
+  database: "creosityspace_test"
 })
 
 module.exports = connection;

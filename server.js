@@ -1,3 +1,19 @@
+
+if (process.env.NODE_ENV === 'development') {
+  console.log("============In DEVELOPMENT environment=============");
+  require('dotenv').load();
+} else {
+  process.env.dbConfigPath = './db_connection.js';
+}
+
+console.log(process.env);
+
+
+//INITIALIZE DATABASE CONNECTION
+const connection = require(process.env.dbConfigPath)
+module.exports.connection = connection;
+
+
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');

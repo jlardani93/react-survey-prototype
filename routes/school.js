@@ -1,5 +1,5 @@
 var express = require('express');
-const connection = require('../db_connection.js');
+const connection = require('../server.js');
 var router = express.Router();
 
 router.use(function(req, res, next) {
@@ -14,4 +14,4 @@ router.get('/info', (req, res, next) => {
   })
 })
 
-module.exports = router; 
+module.exports = router;

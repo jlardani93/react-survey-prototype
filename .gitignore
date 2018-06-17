@@ -2,3 +2,4 @@
 node_modules
 build
 __EMAIL__.js
+.env
