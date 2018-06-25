@@ -6,16 +6,15 @@ if (process.env.NODE_ENV === 'development') {
   process.env.dbConfigPath = './db_connection.js';
 }
 
-console.log(process.env);
-
 
 //INITIALIZE DATABASE CONNECTION
-const connection = require(process.env.dbConfigPath)
-module.exports.connection = connection;
+const mysql = require('mysql');
+const connectionConfiguration = require(process.env.dbConfigPath)
+module.exports.connection = mysql.createConnection(connectionConfiguration);
 
 
 const express = require('express');
-const mysql = require('mysql');
+
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const CREDENTIALS = require('./__EMAIL__.js')
@@ -48,4 +47,5 @@ app.use('/api/surveyTemplate', surveyTemplateRouter);
 app.use('/api/surveyTemplates', surveyTemplatesRouter);
 app.use('/api/teacher', teacherRouter);
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+module.exports.app = app;
+module.exports.port = port;

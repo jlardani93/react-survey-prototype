@@ -1,0 +1,63 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\jlard\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js dev
+
+PATH: 
+  C:\Users\jlard\AppData\Local\atom\bin;C:\Users\jlard\AppData\Roaming\npm;C:\Program Files\Git\cmd;C:\Python27;C:\Program Files (x86)\RBTools\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\WINDOWS\System32\OpenSSH\;
+
+Yarn version: 
+  1.6.0
+
+Node version: 
+  8.10.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Users\jlard\Desktop\programming-environment\react-survey-prototype\package.json: Unexpected token } in JSON at position 522
+      at JSON.parse (<anonymous>)
+      at C:\Users\jlard\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1130:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\jlard\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at C:\Users\jlard\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:109:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "react-backend",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "start": "node ./bin/www",
+      "client": "cd client && yarn start",
+      "server": "nodemon server/server.js",
+      "dev": "set NODE_ENV=development&& start cmd /k npm test &&  start cmd /k mocha server/**/*.test.js && concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+      "prod": "set NODE_ENV=production&& concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+      "test": "cd client && npm test",
+    },
+    "dependencies": {
+      "body-parser": "^1.18.3",
+      "cookie-parser": "~1.4.3",
+      "debug": "~2.6.9",
+      "dotenv": "^6.0.0",
+      "express": "~4.16.0",
+      "http-errors": "~1.6.2",
+      "jade": "~1.11.0",
+      "morgan": "~1.9.0",
+      "mysql": "^2.15.0",
+      "nodemailer": "^4.6.4",
+      "yarn": "^1.6.0"
+    },
+    "devDependencies": {
+      "concurrently": "^3.5.0",
+      "expect": "^1.20.2",
+      "mocha": "^3.4.2",
+      "supertest": "^3.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,5 +1,5 @@
 const express = require('express');
-const connection = require('../server.js');
+const { connection }  = require('../app.js');
 const router = express.Router();
 
 router.use(function(req, res, next) {

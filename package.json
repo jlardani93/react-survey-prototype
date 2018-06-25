@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "client": "cd client && yarn start",
-    "server": "nodemon server.js",
-    "dev": "set NODE_ENV=development&& start cmd /k npm test && concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "server": "nodemon server/server.js",
+    "dev": "set NODE_ENV=development&& start cmd /k npm test &&  start cmd /k nodemon --exec mocha server/**/*.test.js && concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "prod": "set NODE_ENV=production&& concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "test": "cd client && npm test"
   },
@@ -24,6 +24,9 @@
     "yarn": "^1.6.0"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0"
   }
 }
