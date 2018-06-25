@@ -15,8 +15,6 @@ This is a prototype project created for CreositySpace. Through the use of this a
 * Node.js
 * mySQL
 
-##SQL Database Framework
-
 ![Alt text](./client/public/assets/SQL_Database_Framework.png?raw=true "SQL Database Framework")
 
 ## Support and contact details
